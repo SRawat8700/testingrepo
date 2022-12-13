@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         platform: [windows-latest]
-        go-version: [1.18]
+        go-version: [1.19]
     runs-on: sandeepwin01
     steps:
       - uses: actions/checkout@v3
