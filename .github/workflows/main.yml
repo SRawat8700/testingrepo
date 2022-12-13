@@ -47,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: wails-binaries-windows
-          path: C:\abc
+          path: C:\Users\Sandeep.Rawat\go\pkg\mod\github.com\wailsapp\wails@v1.16.9\website\helloworld\build\bin\*
