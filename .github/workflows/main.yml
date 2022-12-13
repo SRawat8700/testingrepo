@@ -17,14 +17,11 @@ jobs:
         with:
           go-version: 1.3
       - uses: actions/checkout@v3
-      - name: Setup Node 16.x
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-          cache: npm
+          node-version: 16
+          cache: 'npm'
       - run: npm ci
-      - run: npm run build
-      - run: npm run format-check
       - run: npm test
       # You may need to manually build you frontend here, unless you have configured frontend build and install commands in wails.json.
       - name: Get Wails
