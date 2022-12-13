@@ -25,6 +25,7 @@ jobs:
 #         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
       - name: Build Wails app
         run: |
+          cd C:\Windows\system32
           wails build
       - name: Sign Windows binaries
         if: matrix.platform == 'windows-latest'
