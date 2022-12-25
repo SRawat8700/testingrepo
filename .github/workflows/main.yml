@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         platform: [windows-latest]
-        go-version: [1.3]
+        go-version: [1.18]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,17 +25,17 @@ jobs:
         run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
       - name: Build Wails app
         run: |
-          cd C:\Windows\system32
+          # cd C:\Windows\system32
           wails build
       - name: Sign Windows binaries
         if: matrix.platform == 'windows-latest'
         run: |
           echo "Creating certificate file"
           New-Item -ItemType directory -Path certificate
-          Set-Content -Path C:\my-cert-base64.txt -Value '${{ secrets.WIN_SIGNING_CERT }}'
-          certutil -decode C:\my-cert-base64.txt certificate\certificate.pfx
+          Set-Content -Path certificate\certificate.txt -Value '${{ secrets.WIN_SIGNING_CERT }}'
+          certutil -decode certificate\certificate.txt certificate\certificate.pfx
           echo "Signing our binaries"
-          & 'C:/Program Files (x86)/Windows Kits/10/bin/x64/signtool.exe' sign /fd sha256 /tr http://ts.ssl.com /f certificate\certificate.pfx /p '${{ secrets.WIN_SIGNING_CERT_PASSWORD }}' C:\Users\Sandeep.Rawat\go\pkg\mod\github.com\wailsapp\wails@v1.16.9\website\helloworld\build\bin\helloworld.exe
+          & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /fd sha256 /tr http://ts.ssl.com /f certificate\certificate.pfx /p '${{ secrets.WIN_SIGNING_CERT_PASSWORD }}' .\build\bin\app.exe
 #       - name: upload artifacts macOS
 #         if: matrix.platform == 'macos-latest'
 #         uses: actions/upload-artifact@v2
@@ -47,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: wails-binaries-windows
-          path: C:\Users\Sandeep.Rawat\go\pkg\mod\github.com\wailsapp\wails@v1.16.9\website\helloworld\build\bin\*
+          path: build/bin/*
